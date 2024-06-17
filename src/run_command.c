@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:42 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/03/07 17:54:14 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:14:58 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	last_running(t_env_info *info, t_parse_list *tmp, t_cmd_tool *cmd)
 	cmd->pipe_fd[1] = -1;
 	cmd->execve_argv = join_args(tmp);
 	cmd->execve_argv = parse_for_expansion(cmd->execve_argv, info);
+	info->last_pid = 1;
 	exec_child(info, tmp, cmd);
 	free_split(cmd->execve_argv);
 }
@@ -104,3 +105,4 @@ void	run_command(t_env_info *info, t_parse_tree *root, t_cmd_tool *cmd)
 	}
 	run_command(info, root->right, cmd);
 }
+

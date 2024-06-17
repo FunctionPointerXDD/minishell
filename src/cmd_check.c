@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:38:48 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/03/06 16:58:14 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:30:40 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,16 @@ int	filtering_cmd(t_cmd_tool *cmd, char *param)
 	}
 	if (S_ISDIR(sbuf.st_mode))
 	{
-		cmd->error_code = 126;
-		put_error(param, 2);
+		if (!check_slash(param))
+		{
+			cmd->error_code = 127;
+			put_error(param, 1);
+		}
+		else
+		{
+			cmd->error_code = 126;
+			put_error(param, 2);
+		}
 	}
 	filtering2(cmd, param);
 	return (-1);
@@ -99,3 +107,4 @@ void	cmd_check(t_cmd_tool *cmd, char *param, char **envp)
 	}
 	free_all(path_list, i, cmd, param);
 }
+

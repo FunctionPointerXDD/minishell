@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:40:22 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/03/07 17:51:54 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:14:57 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int	exec_builtin(t_env_info *info, char **arg)
 
 void	push_command(t_env_info *info, t_cmd_tool *cmd)
 {
-	if (exec_builtin(info, cmd->execve_argv))
+	if (is_builtin(cmd->execve_argv))
 	{
+		exec_builtin(info, cmd->execve_argv);
 		all_close(cmd);
 		exit(info->exit_status);
 	}
@@ -44,7 +45,8 @@ void	push_command(t_env_info *info, t_cmd_tool *cmd)
 	{
 		all_close(cmd);
 		execve(cmd->path, cmd->execve_argv, cmd->envp);
-		exit(cmd->error_code);
+		info->exit_status = cmd->error_code;
+		exit(info->exit_status);
 	}
 }
 
@@ -54,7 +56,11 @@ void	exec_child(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 	signal(SIGQUIT, sigquit_handler);
 	cmd->pid = fork();
 	if (cmd->pid > 0)
+	{
+		if (info->last_pid == 1)
+			info->last_pid = cmd->pid;
 		return ;
+	}
 	if (cmd->pid < 0)
 	{
 		perror("fork()");
@@ -65,15 +71,15 @@ void	exec_child(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 		cmd->envp = list_to_argv(info);
 		if (!cmd->execve_argv)
 		{
-			oper_pipex(cmd);
-			oper_redir(lst, cmd);
 			all_close(cmd);
 			exit(cmd->error_code);
 		}
-		oper_pipex(cmd);
-		oper_redir(lst, cmd);
 		if (!is_builtin(cmd->execve_argv))
-			cmd_check(cmd, cmd->execve_argv[0], cmd->envp);
+		{
+			oper_pipex(cmd);
+			oper_redir(lst, cmd);
+		}
+		cmd_check(cmd, cmd->execve_argv[0], cmd->envp);
 		push_command(info, cmd);
 	}
 }
@@ -116,3 +122,4 @@ void	exec_cmd(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 	all_close(cmd);
 	free_split(cmd->execve_argv);
 }
+

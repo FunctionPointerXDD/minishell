@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:06:09 by sihong            #+#    #+#             */
-/*   Updated: 2024/03/06 20:04:02 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:12:27 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,4 @@ int	main(int argc, char **argv, char **envp)
 	free_all_env(env_info);
 	return (exit_status_tmp);
 }
+

@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:06:10 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/03/07 17:34:27 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:44:10 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_env_info
 	struct s_env_list	*head;
 	struct s_env_list	*tail;
 	int					exit_status;
+	int					last_pid;
 	int					escape;
 	int					size;
 }	t_env_info;
