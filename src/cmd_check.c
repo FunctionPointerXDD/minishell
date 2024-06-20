@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:38:48 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/06/17 19:30:40 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:01:10 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	filtering_cmd(t_cmd_tool *cmd, char *param)
 	struct stat	sbuf;
 
 	if (is_blank(param))
+	{
+		cmd->error_code = 127;
+		put_error(param, 1);
 		return (-1);
+	}
 	if (stat(param, &sbuf) == -1)
 	{
 		if (check_slash(param))

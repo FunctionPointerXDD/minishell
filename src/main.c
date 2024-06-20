@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:06:09 by sihong            #+#    #+#             */
-/*   Updated: 2024/06/12 16:12:27 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:49:40 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,18 @@ void	exec_line(char *line, t_env_info *env_info)
 	}
 }
 
+void	check(void)
+{
+	system("leaks minishell");
+}
+ 
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
 	t_env_info		*env_info;
 	int				exit_status_tmp;	
 
+	//atexit(check);
 	(void)argc;
 	(void)argv;
 	env_info = init_env(envp);
