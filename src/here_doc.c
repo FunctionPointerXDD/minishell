@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:03 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/04/05 19:08:47 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/21 22:44:33 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,33 @@ int	here_doc_write(t_cmd_tool *cmd, char *delimiter)
 	char	*tmp;
 	int		stdin_tmp;
 
-	stdin_tmp = dup(0);
 	tmp = 0;
 	signal(SIGINT, heredoc_sigint);
 	read_here_doc(cmd, &tmp, delimiter);
 	if (tmp == 0)
 	{
 		if (g_signum != SIGINT)
-			write(1, "\033[u\033[B\033[A", 9);
-		else
 		{
+			write(1, "\033[u\033[B\033[A", 9);
+			stdin_tmp = dup(0);
 			if (dup2(stdin_tmp, 0) < 0)
 				perror("dup2");
-			close(stdin_tmp);
+			free(tmp);
+			close(cmd->fd);
+		}
+		else if (g_signum == SIGINT)
+		{
+			stdin_tmp = dup(0);
+			if (dup2(stdin_tmp, 0) < 0)
+				perror("dup2");
 			cmd->escape = 1;
 			g_signum = 1;
+			close(stdin_tmp);
 			close(cmd->fd);
+			free(tmp);
 			return (-1);
 		}
 	}
-	free(tmp);
-	close(cmd->fd);
 	return (0);
 }
 
@@ -98,3 +104,4 @@ void	create_here_doc_stack(t_cmd_tool *cmd)
 {
 	cmd->here_doc_file = ft_calloc_adv(cmd->here_doc_cnt + 1, sizeof(char *));
 }
+

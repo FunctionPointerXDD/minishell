@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:45:30 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/03/06 20:52:26 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/21 22:32:56 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,4 @@ void	here_doc_init(t_parse_tree *root, t_cmd_tool *cmd)
 	run_here_doc(tmp_lst, cmd);
 	here_doc_init(root->right, cmd);
 }
+

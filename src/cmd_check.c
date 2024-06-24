@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:38:48 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/06/17 20:01:10 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/06/24 16:05:24 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,7 @@ int	filtering_cmd(t_cmd_tool *cmd, char *param)
 		return (1);
 	}
 	if (S_ISDIR(sbuf.st_mode))
-	{
-		if (!check_slash(param))
-		{
-			cmd->error_code = 127;
-			put_error(param, 1);
-		}
-		else
-		{
-			cmd->error_code = 126;
-			put_error(param, 2);
-		}
-	}
+		return (2);
 	filtering2(cmd, param);
 	return (-1);
 }
@@ -92,9 +81,11 @@ void	cmd_check(t_cmd_tool *cmd, char *param, char **envp)
 	char	**path_list;
 	char	*path_line;
 	int		i;
+	int 	ret;
 
 	i = 0;
-	if (filtering_cmd(cmd, param) < 0)
+	ret = filtering_cmd(cmd, param);
+	if (ret < 0)
 		return ;
 	path_line = get_path_line(envp);
 	path_list = path_parser(path_line, param);
