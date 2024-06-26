@@ -89,3 +89,4 @@ void	oper_redir(t_parse_list *lst, t_cmd_tool *cmd)
 		tmp = tmp->next;
 	}
 }
+

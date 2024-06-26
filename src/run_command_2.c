@@ -84,6 +84,10 @@ void	exec_child(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 	}
 }
 
+/**
+ * dup() --> std in/out backup!
+ * dup2() --> std in/out restore!
+*/
 void	exec_cmd_at_builtin(t_env_info *info, \
 		t_parse_list *lst, t_cmd_tool *cmd)
 {

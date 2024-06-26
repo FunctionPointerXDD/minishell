@@ -54,31 +54,26 @@ int	here_doc_write(t_cmd_tool *cmd, char *delimiter)
 	int		stdin_tmp;
 
 	tmp = 0;
+	stdin_tmp = dup(0);
 	signal(SIGINT, heredoc_sigint);
 	read_here_doc(cmd, &tmp, delimiter);
-	if (tmp == 0)
+	if (g_signum == SIGINT)
 	{
-		if (g_signum != SIGINT)
-		{
-			write(1, "\033[u\033[B\033[A", 9);
-			stdin_tmp = dup(0);
-			if (dup2(stdin_tmp, 0) < 0)
-				perror("dup2");
-			free(tmp);
-			close(cmd->fd);
-		}
-		else if (g_signum == SIGINT)
-		{
-			stdin_tmp = dup(0);
-			if (dup2(stdin_tmp, 0) < 0)
-				perror("dup2");
-			cmd->escape = 1;
-			g_signum = 1;
-			close(stdin_tmp);
-			close(cmd->fd);
-			free(tmp);
-			return (-1);
-		}
+		if (dup2(stdin_tmp, 0) < 0)
+			perror("dup2");
+		cmd->escape = 1;
+		g_signum = 1;
+		free(tmp);
+		close(cmd->fd);
+		close(stdin_tmp);
+		return (-1);
+	}
+	else
+	{
+		write(1, "\033[u\033[B\033[A", 9);
+		free(tmp);
+		close(cmd->fd);
+		close(stdin_tmp);
 	}
 	return (0);
 }
