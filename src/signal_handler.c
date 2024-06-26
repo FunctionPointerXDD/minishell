@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_signum;
+sig_atomic_t	g_signum;
 
 void	sigquit_handler(int signum)
 {
