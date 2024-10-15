@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:40:22 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/06/24 15:40:29 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:42:48 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,15 @@ void	exec_child(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 			all_close(cmd);
 			exit(cmd->error_code);
 		}
+		/*
 		if (!is_builtin(cmd->execve_argv))
 		{
 			oper_pipex(cmd);
 			oper_redir(lst, cmd);
 		}
+		*/
+		oper_pipex(cmd);
+		oper_redir(lst, cmd);
 		cmd_check(cmd, cmd->execve_argv[0], cmd->envp);
 		push_command(info, cmd);
 	}

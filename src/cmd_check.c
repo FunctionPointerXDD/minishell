@@ -6,7 +6,7 @@
 /*   By: chansjeo <chansjeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:38:48 by chansjeo          #+#    #+#             */
-/*   Updated: 2024/06/24 16:05:24 by chansjeo         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:44:36 by chansjeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	cmd_check(t_cmd_tool *cmd, char *param, char **envp)
 	int		i;
 	int 	ret;
 
+	if (ft_strncmp("exit", param, 5) == 0)
+		return ;
 	i = 0;
 	ret = filtering_cmd(cmd, param);
 	if (ret < 0)
