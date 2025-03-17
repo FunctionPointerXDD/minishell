@@ -54,6 +54,11 @@ void	exec_child(t_env_info *info, t_parse_list *lst, t_cmd_tool *cmd)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
+	if (cmd->fork_cnt++ > 500)
+	{
+		printf("too many fork()\n");
+		exit(1);
+	}
 	cmd->pid = fork();
 	if (cmd->pid > 0)
 	{

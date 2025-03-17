@@ -140,6 +140,7 @@ typedef struct s_cmd_tool
 	int		is_builtin;
 	int		is_pipe;
 	int		error_code;
+	int 	fork_cnt;
 }	t_cmd_tool;
 
 /*------ chansjeo ------*/

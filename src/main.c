@@ -31,6 +31,7 @@ void	init_cmd_tool(t_cmd_tool *cmd)
 	cmd->prev_fd = -1;
 	cmd->pipe_fd[0] = -1;
 	cmd->pipe_fd[1] = -1;
+	cmd->fork_cnt = 0;
 }
 
 void	unlink_here_doc_file(t_cmd_tool *cmd)
